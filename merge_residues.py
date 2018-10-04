@@ -84,6 +84,6 @@ multiple_loop_hier = transfer_residue_groups_from_other(rearranged_loop_hier,
 
 base_pdb_in = hierarchy.input(base_pdb)
 f = open(os.path.join(path,"multiple_loop.pdb"), "w+")
-f.write(multiple_loop_hier.reset_atom_i_seqs().as_pdb_string(
+f.write(multiple_loop_hier.reset_i_seq_if_necessary().as_pdb_string(
     crystal_symmetry=base_pdb_in.input.crystal_symmetry()))
 f.close()
