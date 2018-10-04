@@ -64,7 +64,7 @@ for dataset_folder in dataset_folders:
 
         os.system('giant.score_model input.pdb1={} '
                   'input.mtz1={} res_names=None '
-                  'output.out_dir="edstats'.format(refine_pdb, refine_mtz))
+                  'output.out_dir="edstats"'.format(refine_pdb, refine_mtz))
 
     exit()
 
