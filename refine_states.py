@@ -76,13 +76,14 @@ for dataset_folder in dataset_folders:
         cc_file = os.path.join(working_dir, "residue_cc.txt")
         cc_csv  = os.path.join(working_dir, "residue_cc.csv")
 
-        os.system("phenix.real_space_correlation {} {}"
-                  " detail=residue > {}".format(refine_pdb, refine_mtz,
-                                                cc_file))
+        if os.path.exists(refine_pdb) and os.apth.exists(refine_mtz):
+            os.system("phenix.real_space_correlation {} {}"
+                      " detail=residue > {}".format(refine_pdb, refine_mtz,
+                                                    cc_file))
 
-        convert_txt_to_csv_cc(input_filename=cc_file,
-                              output_filename=cc_csv,
-                              type=type)
+            # convert_txt_to_csv_cc(input_filename=cc_file,
+            #                       output_filename=cc_csv,
+            #                       type=type)
 
 
 

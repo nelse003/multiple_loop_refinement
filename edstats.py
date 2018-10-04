@@ -16,8 +16,7 @@ def convert_txt_to_csv_cc(input_filename, output_filename, type):
         a_altloc['Alt']='A'
         loop_df = a_altloc.append(b_altloc)
     else:
-        print(df.index.names)
-        exit()
+
 
     loop_df['type'] = type
     loop_df.to_csv(path_or_buf=output_filename)
