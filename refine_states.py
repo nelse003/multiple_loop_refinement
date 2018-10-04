@@ -21,7 +21,7 @@ for dataset_folder in os.listdir(data_folder):
     dataset_copy_folder = os.path.join(refinement_folder,
                                        dataset_folder)
 
-    if os.path.exists(dataset_copy_folder):
+    if not os.path.exists(dataset_copy_folder):
         os.mkdir(dataset_copy_folder)
 
     dataset = os.path.basename(dataset_copy_folder)
