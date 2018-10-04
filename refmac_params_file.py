@@ -15,15 +15,15 @@ def write_params(path, residues, name):
 
     for residue in residues:
 
-        f.write("occupancy groups id 1 chain {} resi     {} alt A".format(
+        f.write("occupancy groups id 1 chain {} resi     {} alt A\n".format(
             residue[0], residue[1]))
-        f.write("occupancy groups id 2 chain {} resi     {} alt A".format(
+        f.write("occupancy groups id 2 chain {} resi     {} alt A\n".format(
             residue[0], residue[1]))
 
-    f.write("occupancy group alts complete 1 2")
-    f.write("occupancy refine")
-    f.write("ncyc 10")
-    f.write("weight AUTO")
+    f.write("occupancy group alts complete 1 2\n")
+    f.write("occupancy refine\n")
+    f.write("ncyc 10\n")
+    f.write("weight AUTO\n")
 
     f.close()
 
