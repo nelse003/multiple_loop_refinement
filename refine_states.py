@@ -69,7 +69,6 @@ for dataset_folder in dataset_folders:
         #           'input.mtz1={} selection.res_names={} '
         #           'output.out_dir="edstats"'.format(refine_pdb, refine_mtz,res_names))
 
-    exit()
 
 
 
