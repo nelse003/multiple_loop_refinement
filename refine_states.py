@@ -16,7 +16,7 @@ input_pdbs = {base_pdb:"base",
 if not os.path.exists(refinement_folder):
     os.mkdir(refinement_folder)
 
-dataset_folders = [folder for folder in os.listdir(data_folder) is os.path.isdir(data_folder)]
+dataset_folders = [folder for folder in os.listdir(data_folder) if os.path.isdir(data_folder)]
 
 print(dataset_folders)
 exit()
