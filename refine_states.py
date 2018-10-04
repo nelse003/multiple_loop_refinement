@@ -81,13 +81,15 @@ for dataset_folder in dataset_folders:
             print(os.getcwd())
             print(cc_file)
 
-            os.system("phenix.real_space_correlation {} {}"
-                      " detail=residue > {}".format(refine_pdb, refine_mtz,
-                                                    cc_file))
+            if not os.path.exists(cc_file):
+                os.system("phenix.real_space_correlation {} {}"
+                          " detail=residue > {}".format(refine_pdb, refine_mtz,
+                                                        cc_file))
 
-            # convert_txt_to_csv_cc(input_filename=cc_file,
-            #                       output_filename=cc_csv,
-            #                       type=type)
+
+            convert_txt_to_csv_cc(input_filename=cc_file,
+                                  output_filename=cc_csv,
+                                  type=type)
 
 
 
