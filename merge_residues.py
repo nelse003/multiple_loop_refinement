@@ -59,8 +59,6 @@ loop_residues =[['A', '24'], ['A', '25'], ['A', '26'], ['A', '27'],
 
 base_loop_hier = residue_select_hierarchy_from_pdb(base_pdb,
                                                    loop_residues)
-print(base_loop_hier)
-print(type(base_loop_hier))
 
 base_loop_hier = set_all_hier_occ(hier=base_loop_hier, occ=0.5)
 base_loop_hier = set_all_hier_altloc(hier=base_loop_hier, altloc='A')
@@ -83,6 +81,8 @@ multiple_loop_hier = transfer_residue_groups_from_other(rearranged_loop_hier,
                                                         altloc_loop_changed_hier,
                                                         in_place=False,
                                                         verbose=False)
+
+multiple_loop_hier.reset_atom_i_seq()
 
 base_pdb_in = hierarchy.input(base_pdb)
 f = open(os.path.join(path,"multiple_loop.pdb"), "w+")
