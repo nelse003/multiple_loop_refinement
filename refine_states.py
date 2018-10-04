@@ -25,7 +25,7 @@ for dataset_folder in os.listdir(data_folder):
         os.mkdir(dataset_copy_folder)
 
     dataset = os.path.basename(dataset_copy_folder)
-    free_mtz = os.path.join(dataset_folder, "{}.free.mtz".format(dataset))
+    free_mtz = os.path.join(data_folder, dataset_folder, "{}.free.mtz".format(dataset))
 
     free_mtz_dst = os.path.join(dataset_copy_folder, "{}.free.mtz".format(dataset))
 
