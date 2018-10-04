@@ -47,7 +47,7 @@ for dataset_folder in dataset_folders:
     if not os.path.exists(free_mtz_dst):
         copyfile(free_mtz, free_mtz_dst)
 
-    for pdb, type in input_pdbs.items():o
+    for pdb, type in input_pdbs.items():
 
         working_dir = os.path.join(dataset_copy_folder, type)
 
