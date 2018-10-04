@@ -14,6 +14,10 @@ loop_residues =[['A', '24'], ['A', '25'], ['A', '26'], ['A', '27'],
                 ['A', '28'], ['A', '29'], ['A', '30'], ['A', '31'],
                 ['A', '32'], ['A', '33'], ['A', '34'], ['A', '35']]
 
+res_names = ['ALA', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN', 'GLU', 'GLY', 'HIS',
+             'ILE', 'LEU', 'LYS', 'MET', 'PHE', 'PRO', 'SER', 'THR', 'TRP',
+             'TYR', 'VAL']
+
 input_pdbs = {base_pdb:"base",
               rearranged_pdb:"rearranged",
               multiple_loop_pdb: "multiple"}
@@ -63,8 +67,8 @@ for dataset_folder in dataset_folders:
         refine_mtz = os.path.join(working_dir,"refine.mtz")
 
         os.system('giant.score_model input.pdb1={} '
-                  'input.mtz1={} res_names=None '
-                  'output.out_dir="edstats"'.format(refine_pdb, refine_mtz))
+                  'input.mtz1={} selection.res_names={} '
+                  'output.out_dir="edstats"'.format(refine_pdb, refine_mtz,res_names))
 
     exit()
 
