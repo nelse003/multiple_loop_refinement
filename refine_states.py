@@ -16,7 +16,9 @@ input_pdbs = {base_pdb:"base",
 if not os.path.exists(refinement_folder):
     os.mkdir(refinement_folder)
 
-for dataset_folder in os.listdir(data_folder):
+dataset_folders = [folder for folder in os.listdir(data_folder) is os.path.isdir(data_folder)]
+
+for dataset_folder in dataset_folders:
 
     dataset_copy_folder = os.path.join(refinement_folder,
                                        dataset_folder)
