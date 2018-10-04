@@ -77,6 +77,9 @@ for dataset_folder in dataset_folders:
         cc_csv  = os.path.join(working_dir, "residue_cc.csv")
 
         if os.path.exists(refine_pdb) and os.path.exists(refine_mtz):
+
+            print(os.getcwd())
+
             os.system("phenix.real_space_correlation {} {}"
                       " detail=residue > {}".format(refine_pdb, refine_mtz,
                                                     cc_file))
