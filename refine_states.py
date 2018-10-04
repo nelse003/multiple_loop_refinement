@@ -14,9 +14,8 @@ loop_residues =[['A', '24'], ['A', '25'], ['A', '26'], ['A', '27'],
                 ['A', '28'], ['A', '29'], ['A', '30'], ['A', '31'],
                 ['A', '32'], ['A', '33'], ['A', '34'], ['A', '35']]
 
-res_names = ['ALA', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN', 'GLU', 'GLY', 'HIS',
-             'ILE', 'LEU', 'LYS', 'MET', 'PHE', 'PRO', 'SER', 'THR', 'TRP',
-             'TYR', 'VAL']
+res_names = "ALA,ARG,ASN,ASP,CYS,GLN,GLU,GLY,HIS,ILE," \
+            "LEU,LYS,MET,PHE,PRO,SER,THR,TRP,TYR,VAL"
 
 input_pdbs = {base_pdb:"base",
               rearranged_pdb:"rearranged",
