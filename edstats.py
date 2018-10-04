@@ -9,16 +9,17 @@ def convert_txt_to_csv_cc(input_filename, output_filename, type):
 
     df = pd.read_csv(StringIO(files[1]), sep='\s+')
 
-    b_altloc = df.loc[('A','B')]
-    b_altloc['Alt']='B'
-    a_altloc = df.loc[('A','A')]
-    a_altloc['Alt']='A'
+    if type == "multiple":
+        b_altloc = df.loc[('A','B')]
+        b_altloc['Alt']='B'
+        a_altloc = df.loc[('A','A')]
+        a_altloc['Alt']='A'
+        loop_df = a_altloc.append(b_altloc)
+    else:
+        print(df.index.names)
+        exit()
 
-    loop_df = a_altloc.append(b_altloc)
     loop_df['type'] = type
-
-    print(loop_df)
-
     loop_df.to_csv(path_or_buf=output_filename)
 
 
