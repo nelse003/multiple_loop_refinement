@@ -51,7 +51,7 @@ def residue_select_hierarchy_from_pdb(pdb_path,
 
 path = "/dls/labxchem/data/2017/lb18145-17/processing/reference/"
 base_pdb = os.path.join(path, "XX02KALRNA-x0074-ground-state.pdb")
-rearranged_pdb = os.path.join(path,"dimple_rearrange.pdb")
+rearranged_pdb = os.path.join(path,"dimple_rearrange_correct_residues.pdb")
 
 loop_residues =[['A', '24'], ['A', '25'], ['A', '26'], ['A', '27'],
                 ['A', '28'], ['A', '29'], ['A', '30'], ['A', '31'],
