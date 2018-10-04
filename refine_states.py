@@ -1,7 +1,7 @@
 import os
 from shutil import copyfile
 from refmac_params_file import write_params
-from mmtbx.real_space_correlation import map_statistics_for_fragment
+from merge_residues import residue_select_hierarchy_from_pdb
 from edstats import convert_txt_to_csv_cc
 
 ref_path = "/dls/labxchem/data/2017/lb18145-17/processing/reference/"
@@ -65,7 +65,7 @@ for dataset_folder in dataset_folders:
         #     os.system("giant.quick_refine {} {}".format(pdb,free_mtz_dst))
 
         refine_pdb = os.path.join(working_dir,"refine.pdb")
-        refine_mtz = os.path.join(working_dir,"refine.mtz")
+        refine_mtz = os.path.join(working_dir,"refine.mtz")ccp4-
         #
         # os.system('giant.score_model input.pdb1={} '
         #           'input.mtz1={} selection.res_names={} '
