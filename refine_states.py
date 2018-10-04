@@ -1,6 +1,8 @@
 import os
 from shutil import copyfile
 from refmac_params_file import write_params
+from mmtbx.real_space_correlation import map_statistics_for_fragment
+from edstats import convert_txt_to_csv_cc
 
 ref_path = "/dls/labxchem/data/2017/lb18145-17/processing/reference/"
 refinement_folder = "/dls/labxchem/data/2017/lb18145-17/processing/analysis/multiple_loop_refinements"
@@ -55,20 +57,32 @@ for dataset_folder in dataset_folders:
             os.mkdir(working_dir)
 
         os.chdir(working_dir)
-        if type=="multiple":
-            write_params(path=working_dir, residues=loop_residues, name=type)
-            os.system("giant.quick_refine {} {} {}".format(
-                pdb, free_mtz_dst, "multiple.params"))
-        else:
-            os.system("giant.quick_refine {} {}".format(pdb,free_mtz_dst))
+        # if type=="multiple":
+        #     write_params(path=working_dir, residues=loop_residues, name=type)
+        #     os.system("giant.quick_refine {} {} {}".format(
+        #         pdb, free_mtz_dst, "multiple.params"))
+        # else:
+        #     os.system("giant.quick_refine {} {}".format(pdb,free_mtz_dst))
 
-        # refine_pdb = os.path.join(working_dir,"refine.pdb")
-        # refine_mtz = os.path.join(working_dir,"refine.mtz")
+        refine_pdb = os.path.join(working_dir,"refine.pdb")
+        refine_mtz = os.path.join(working_dir,"refine.mtz")
         #
         # os.system('giant.score_model input.pdb1={} '
         #           'input.mtz1={} selection.res_names={} '
         #           'output.out_dir="edstats"'.format(refine_pdb, refine_mtz,res_names))
 
+        loop_hier = residue_select_hierarchy_from_pdb(refine_pdb, loop_residues)
+
+        cc_file = os.path.join(working_dir, "residue_cc.txt")
+        cc_csv  = os.path.join(working_dir, "residue_cc.csv")
+
+        os.system("phenix.real_space_correlation {} {}"
+                  " detail=residue > {}".format(refine_pdb, refine_mtz,
+                                                cc_file))
+
+        convert_txt_to_csv_cc(input_filename=cc_file,
+                              output_filename=cc_csv,
+                              type=type)
 
 
 
