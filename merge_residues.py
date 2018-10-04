@@ -86,6 +86,6 @@ multiple_loop_hier.reset_i_seq_if_necessary()
 base_pdb_in = hierarchy.input(base_pdb)
 f = open(os.path.join(path,"multiple_loop.pdb"), "w+")
 f.write(multiple_loop_hier.as_pdb_string(
-    atoms_reset_serial_first_value = 0,
+    atoms_reset_serial_first_value = 1,
     crystal_symmetry=base_pdb_in.input.crystal_symmetry()))
 f.close()
