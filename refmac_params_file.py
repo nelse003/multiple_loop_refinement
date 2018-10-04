@@ -17,7 +17,7 @@ def write_params(path, residues, name):
 
         f.write("occupancy groups id 1 chain {} resi     {} alt A\n".format(
             residue[0], residue[1]))
-        f.write("occupancy groups id 2 chain {} resi     {} alt A\n".format(
+        f.write("occupancy groups id 2 chain {} resi     {} alt B\n".format(
             residue[0], residue[1]))
 
     f.write("occupancy group alts complete 1 2\n")
