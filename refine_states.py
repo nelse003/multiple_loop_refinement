@@ -39,6 +39,11 @@ for dataset_folder in dataset_folders:
     if not os.path.exists(free_mtz_dst):
         copyfile(free_mtz, free_mtz_dst)
 
+    os.chdir(dataset_copy_folder)
+    os.system("giant.quick_refine {} {}".format(base_pdb,free_mtz_dst))
+
+    exit()
+
 
 
 
