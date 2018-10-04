@@ -6,7 +6,7 @@ from iotbx.pdb import hierarchy
 
 def set_all_hier_occ(hier, occ):
 
-    for chain in hier.only_model.chains():
+    for chain in hier.only_model().chains():
         for residue_group in chain.residue_groups():
             for atom_group in residue_group.atom_groups():
                 for atom in atom_group.atoms():
@@ -15,7 +15,7 @@ def set_all_hier_occ(hier, occ):
 
 def set_all_hier_altloc(hier, altloc):
 
-    for chain in new_atoms_hier.only_model.chains():
+    for chain in new_atoms_hier.only_model().chains():
         for residue_group in chain.residue_groups():
             for atom_group in residue_group.atom_groups():
                 atom_group.altloc = altloc
