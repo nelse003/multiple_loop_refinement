@@ -1,5 +1,6 @@
 import os
 from shutil import copyfile
+from refmac_params_file import write_params
 
 ref_path = "/dls/labxchem/data/2017/lb18145-17/processing/reference/"
 refinement_folder = "/dls/labxchem/data/2017/lb18145-17/processing/analysis/multiple_loop_refinements"
@@ -8,6 +9,10 @@ data_folder =  "/dls/labxchem/data/2017/lb18145-17/processing/analysis/initial_m
 base_pdb = os.path.join(ref_path, "XX02KALRNA-x0074-ground-state.pdb")
 rearranged_pdb = os.path.join(ref_path,"dimple_rearrange_correct_residues.pdb")
 multiple_loop_pdb = os.path.join(ref_path,"multiple_loop.pdb")
+
+loop_residues =[['A', '24'], ['A', '25'], ['A', '26'], ['A', '27'],
+                ['A', '28'], ['A', '29'], ['A', '30'], ['A', '31'],
+                ['A', '32'], ['A', '33'], ['A', '34'], ['A', '35']]
 
 input_pdbs = {base_pdb:"base",
               rearranged_pdb:"rearranged",
@@ -47,8 +52,12 @@ for dataset_folder in dataset_folders:
             os.mkdir(working_dir)
 
         os.chdir(working_dir)
-        os.system("giant.make_restraints {}".format(pdb))
-        #os.system("giant.quick_refine {} {}".format(pdb,free_mtz_dst))
+        if type=="multiple":
+            write_params(path=working_dir, residues=loop_residues, name=type)
+            os.system("giant.quick_refine {} {} {}".format(
+                pdb, free_mtz_dst, "multiple.params"))
+        else:
+            os.system("giant.quick_refine {} {}".format(pdb,free_mtz_dst))
 
     exit()
 
