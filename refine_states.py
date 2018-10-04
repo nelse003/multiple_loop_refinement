@@ -47,7 +47,8 @@ for dataset_folder in dataset_folders:
             os.mkdir(working_dir)
 
         os.chdir(working_dir)
-        os.system("giant.quick_refine {} {}".format(pdb,free_mtz_dst))
+        os.system("giant.make_restraints {}".format(pdb))
+        #os.system("giant.quick_refine {} {}".format(pdb,free_mtz_dst))
 
     exit()
 
