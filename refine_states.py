@@ -14,7 +14,7 @@ input_pdbs = {base_pdb:"base",
               multiple_loop_pdb: "multiple"}
 
 if not os.path.exists(refinement_folder):
-    os.mkdir(folder)
+    os.mkdir(refinement_folder)
 
 for dataset_folder in data_folder:
 
