@@ -18,6 +18,9 @@ if not os.path.exists(refinement_folder):
 
 for dataset_folder in data_folder:
 
+    print(dataset_folder)
+    exit()
+
     dataset_copy_folder = os.path.join(refinement_folder,
                                        dataset_folder)
 
