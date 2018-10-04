@@ -57,9 +57,11 @@ loop_residues =[['A', '24'], ['A', '25'], ['A', '26'], ['A', '27'],
                 ['A', '28'], ['A', '29'], ['A', '30'], ['A', '31'],
                 ['A', '32'], ['A', '33'], ['A', '34'], ['A', '35']]
 
-
 base_loop_hier = residue_select_hierarchy_from_pdb(base_pdb,
                                                    loop_residues)
+print(base_loop_hier)
+print(type(base_loop_hier))
+
 base_loop_hier = set_all_hier_occ(hier=base_loop_hier, occ=0.5)
 base_loop_hier = set_all_hier_altloc(hier=base_loop_hier, altloc='A')
 
