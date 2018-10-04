@@ -24,3 +24,5 @@ def write_params(path, residues, name):
     f.write("weight AUTO")
 
     f.close()
+
+write_params(path,loop_residues,name)
