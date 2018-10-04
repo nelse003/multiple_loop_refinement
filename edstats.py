@@ -16,13 +16,13 @@ def convert_txt_to_csv_cc(input_filename, output_filename, type):
         a_altloc['Alt']='A'
         loop_df = a_altloc.append(b_altloc)
     else:
-        pass
+        loop_df = df.iloc[23:35]
 
     loop_df['type'] = type
     loop_df.to_csv(path_or_buf=output_filename)
 
 
-convert_txt_to_csv_cc("residue_format_test.txt","test.csv","multiple")
+convert_txt_to_csv_cc("residue_cc.txt","test.csv","base")
 
 
 # fig = plt.figure()
