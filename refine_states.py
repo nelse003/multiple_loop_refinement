@@ -55,19 +55,19 @@ for dataset_folder in dataset_folders:
             os.mkdir(working_dir)
 
         os.chdir(working_dir)
-        # if type=="multiple":
-        #     write_params(path=working_dir, residues=loop_residues, name=type)
-        #     os.system("giant.quick_refine {} {} {}".format(
-        #         pdb, free_mtz_dst, "multiple.params"))
-        # else:
-        #     os.system("giant.quick_refine {} {}".format(pdb,free_mtz_dst))
+        if type=="multiple":
+            write_params(path=working_dir, residues=loop_residues, name=type)
+            os.system("giant.quick_refine {} {} {}".format(
+                pdb, free_mtz_dst, "multiple.params"))
+        else:
+            os.system("giant.quick_refine {} {}".format(pdb,free_mtz_dst))
 
-        refine_pdb = os.path.join(working_dir,"refine.pdb")
-        refine_mtz = os.path.join(working_dir,"refine.mtz")
-
-        os.system('giant.score_model input.pdb1={} '
-                  'input.mtz1={} selection.res_names={} '
-                  'output.out_dir="edstats"'.format(refine_pdb, refine_mtz,res_names))
+        # refine_pdb = os.path.join(working_dir,"refine.pdb")
+        # refine_mtz = os.path.join(working_dir,"refine.mtz")
+        #
+        # os.system('giant.score_model input.pdb1={} '
+        #           'input.mtz1={} selection.res_names={} '
+        #           'output.out_dir="edstats"'.format(refine_pdb, refine_mtz,res_names))
 
     exit()
 
