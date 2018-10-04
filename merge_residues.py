@@ -82,7 +82,7 @@ multiple_loop_hier = transfer_residue_groups_from_other(rearranged_loop_hier,
                                                         in_place=False,
                                                         verbose=False)
 
-multiple_loop_hier.reset_atom_i_seqs()
+multiple_loop_hier = multiple_loop_hier.reset_atom_i_seqs()
 
 base_pdb_in = hierarchy.input(base_pdb)
 f = open(os.path.join(path,"multiple_loop.pdb"), "w+")
