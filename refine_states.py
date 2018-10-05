@@ -93,7 +93,7 @@ for dataset_folder in dataset_folders:
                                  dataset=dataset,
                                  csv_name=os.path.basename(cc_csv))
 
-            exit()
+
 
 
 
