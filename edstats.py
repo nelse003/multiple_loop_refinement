@@ -45,11 +45,11 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
             cc_b = b_altloc['CC']
 
             ax.plot(res_num, cc_a,
-                     label="Multiple:\n Mean Occ {} \n Mean B {}".format(
+                     label="Base Multiple:\n Mean Occ {} \n Mean B {}".format(
                          mean_occ_a, mean_adp_a))
 
             ax.plot(res_num, cc_b,
-                     label="Multiple:\n Mean Occ {} \n Mean B {}".format(
+                     label="Rearranged Multiple:\n Mean Occ {} \n Mean B {}".format(
                          mean_occ_b, mean_adp_b))
             continue
 
