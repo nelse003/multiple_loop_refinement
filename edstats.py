@@ -29,6 +29,21 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
 
         df = pd.read_csv(os.path.join(refinement_folder, dataset, type, csv_name))
 
+        if type == "multiple":
+            a_altloc = df[df['Alt']=='A']
+            b_altloc = df[df['Alt']=='B']
+            res_num = df['Unnamed: 1']
+
+            print(a_altloc)
+            print(b_altloc)
+            print(res_num)
+        #
+        # cc_a = a_altloc['CC']
+        # cc_b = b_altloc['CC']
+        #
+        # plt.plot(res_num, cc_a)
+        # plt.plot(res_num, cc_b)
+
         print(df)
 
 
