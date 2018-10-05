@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from StringIO import StringIO
 import matplotlib
