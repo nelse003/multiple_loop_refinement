@@ -57,6 +57,8 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
         mean_adp = df['ADP'].mean()
         cc = df['CC']
 
+        print(cc)
+        print(res_num)
         print(len(cc), len(res_num))
 
         ax.plot(res_num, cc, label = "{}:\n Mean occ: {}\nMean B {}".format(
