@@ -3,7 +3,7 @@ from shutil import copyfile
 from refmac_params_file import write_params
 from merge_residues import residue_select_hierarchy_from_pdb
 from edstats import convert_txt_to_csv_cc
-
+from edstats import plot_edstats_compare
 ref_path = "/dls/labxchem/data/2017/lb18145-17/processing/reference/"
 refinement_folder = "/dls/labxchem/data/2017/lb18145-17/processing/analysis/multiple_loop_refinements"
 data_folder =  "/dls/labxchem/data/2017/lb18145-17/processing/analysis/initial_model_rearrangement"
@@ -78,18 +78,19 @@ for dataset_folder in dataset_folders:
 
         if os.path.exists(refine_pdb) and os.path.exists(refine_mtz):
 
-            print(os.getcwd())
-            print(cc_file)
-
             if not os.path.exists(cc_file):
                 os.system("phenix.real_space_correlation {} {}"
                           " detail=residue > {}".format(refine_pdb, refine_mtz,
                                                         cc_file))
 
+            if not os.path.exists(cc_csv):
+                convert_txt_to_csv_cc(input_filename=cc_file,
+                                      output_filename=cc_csv,
+                                      type=type)
 
-            convert_txt_to_csv_cc(input_filename=cc_file,
-                                  output_filename=cc_csv,
-                                  type=type)
+            plot_edstats_compare(input_pdbs, refinement_folder, csv_name)
+
+            exit()
 
 
 

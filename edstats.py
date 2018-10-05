@@ -22,19 +22,23 @@ def convert_txt_to_csv_cc(input_filename, output_filename, type):
     loop_df.to_csv(path_or_buf=output_filename)
 
 
-convert_txt_to_csv_cc("residue_cc.txt","test.csv","base")
+def plot_edstats_compare(input_pdbs, refinement_folder, csv_name):
+
+    for pdb, type in input_pdbs.items():
+
+        df = pd.read_csv(os.path.join(refinement_folder, type, csv_name))
+
+        print(df)
 
 
-# fig = plt.figure()
-#
-# res_num = [x[1] for x in list(a_altloc.index.values)]
-#
-# cc_a = a_altloc['CC']
-# cc_b = b_altloc['CC']
-#
-# plt.plot(res_num, cc_a)
-# plt.plot(res_num, cc_b)
-#
+
+
+
+
+
+
+
+    #
 #
 #
 # plt.savefig("test.png")
