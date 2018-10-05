@@ -38,7 +38,7 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
             plt.plot(res_num, cc_a)
             plt.plot(res_num, cc_b)
 
-    plt.show()
+    plt.savefig("test.png")
 
 
 
