@@ -47,7 +47,7 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
 
             plt.plot(res_num, cc_b,
                      label="Multiple: Mean Occ {} Mean B {}".format(
-                         mean_occ_b, mean_adp_b)))
+                         mean_occ_b, mean_adp_b))
 
 
 
