@@ -35,9 +35,12 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
             res_num = df['Unnamed: 1']
 
             print(a_altloc)
+            print("---------------------------------------")
             print(b_altloc)
+            print("---------------------------------------")
             print(res_num)
-        #
+            print("---------------------------------------")
+
         # cc_a = a_altloc['CC']
         # cc_b = b_altloc['CC']
         #
