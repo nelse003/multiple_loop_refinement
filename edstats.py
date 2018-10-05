@@ -31,9 +31,9 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
     for pdb, type in input_pdbs.items():
 
         df = pd.read_csv(os.path.join(refinement_folder, dataset, type, csv_name))
-        res_num = df['Unnamed: 1'].unique()
 
         if type == "multiple":
+            res_num = df['Unnamed: 1'].unique()
             a_altloc = df[df['Alt']=='A']
             b_altloc = df[df['Alt']=='B']
             cc_a = a_altloc['CC']
@@ -53,6 +53,7 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
                          mean_occ_b, mean_adp_b))
             continue
 
+        res_num = df['Unnamed: 2'].unique()
         mean_occ = df['occ'].mean()
         mean_adp = df['ADP'].mean()
         cc = df['CC']
