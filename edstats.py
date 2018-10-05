@@ -70,7 +70,7 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
     plt.title(dataset)
 
     plt.savefig("rscc_{}.png".format(dataset))
-
+    plt.close()
 
 
         #
