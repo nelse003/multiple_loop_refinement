@@ -50,7 +50,7 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
                          mean_occ_b, mean_adp_b))
 
 
-
+    plt.legend()
     plt.savefig("test.png")
 
 
