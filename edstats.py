@@ -28,9 +28,9 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
     for pdb, type in input_pdbs.items():
 
         df = pd.read_csv(os.path.join(refinement_folder, dataset, type, csv_name))
-        res_num = df['Unnamed: 1'].values
+        res_num = df['Unnamed: 1'].unique().values()
 
-        print(type(res_num))
+        print(res_num)
         exit()
 
         if type == "multiple":
