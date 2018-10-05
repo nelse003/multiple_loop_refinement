@@ -25,7 +25,7 @@ def convert_txt_to_csv_cc(input_filename, output_filename, type):
 
 def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(15,10))
     ax = plt.subplot(111)
 
     for pdb, type in input_pdbs.items():
@@ -45,16 +45,16 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
             cc_b = b_altloc['CC']
 
             ax.plot(res_num, cc_a,
-                     label="Multiple: Mean Occ {} Mean B {}".format(
+                     label="Multiple:\n Mean Occ {} \n Mean B {}".format(
                          mean_occ_a, mean_adp_a))
 
             ax.plot(res_num, cc_b,
-                     label="Multiple: Mean Occ {} Mean B {}".format(
+                     label="Multiple:\n Mean Occ {} \n Mean B {}".format(
                          mean_occ_b, mean_adp_b))
 
-    # Shrink current axis by 60%
+    # Shrink current axis by 40%
     box = ax.get_position()
-    ax.set_position([box.x0, box.y0, box.width * 0.4, box.height])
+    ax.set_position([box.x0, box.y0, box.width * 0.6, box.height])
 
     # Put a legend to the right of the current axis
     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize='x-small')
