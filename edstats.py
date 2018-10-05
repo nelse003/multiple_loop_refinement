@@ -34,9 +34,22 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
             a_altloc = df[df['Alt']=='A']
             b_altloc = df[df['Alt']=='B']
             cc_a = a_altloc['CC']
+            mean_occ_a = a_altloc['occ'].mean()
+            mean_occ_b = b_altloc['occ'].mean()
+            mean_adp_a = a_altloc['ADP'].mean()
+            mean_adp_b = b_altloc['ADP'].mean()
+
             cc_b = b_altloc['CC']
-            plt.plot(res_num, cc_a)
-            plt.plot(res_num, cc_b)
+
+            plt.plot(res_num, cc_a,
+                     label="Multiple: Mean Occ {} Mean B {}".format(
+                         mean_occ_a, mean_adp_a))
+
+            plt.plot(res_num, cc_b,
+                     label="Multiple: Mean Occ {} Mean B {}".format(
+                         mean_occ_b, mean_adp_b)))
+
+
 
     plt.savefig("test.png")
 
