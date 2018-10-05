@@ -23,11 +23,11 @@ def convert_txt_to_csv_cc(input_filename, output_filename, type):
     loop_df.to_csv(path_or_buf=output_filename)
 
 
-def plot_edstats_compare(input_pdbs, refinement_folder, csv_name):
+def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
 
     for pdb, type in input_pdbs.items():
 
-        df = pd.read_csv(os.path.join(refinement_folder, type, csv_name))
+        df = pd.read_csv(os.path.join(refinement_folder, dataset, type, csv_name))
 
         print(df)
 
