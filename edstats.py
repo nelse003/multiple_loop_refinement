@@ -58,11 +58,6 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
         mean_adp = df['ADP'].mean()
         cc = df['CC']
 
-        print(df)
-        print(cc)
-        print(res_num)
-        print(len(cc), len(res_num))
-
         ax.plot(res_num, cc, label = "{}:\n Mean occ: {}\nMean B {}".format(
             type, mean_occ, mean_adp))
 
@@ -72,8 +67,9 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
 
     # Put a legend to the right of the current axis
     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize='x-small')
+    plt.title(dataset)
 
-    plt.savefig("test.png")
+    plt.savefig("rscc_{}.png".format(dataset))
 
 
 
