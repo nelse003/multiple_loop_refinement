@@ -51,6 +51,7 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
             ax.plot(res_num, cc_b,
                      label="Multiple:\n Mean Occ {} \n Mean B {}".format(
                          mean_occ_b, mean_adp_b))
+            continue
 
         mean_occ = df['occ'].mean()
         mean_adp = df['ADP'].mean()
