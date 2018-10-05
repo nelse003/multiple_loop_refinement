@@ -88,7 +88,7 @@ for dataset_folder in dataset_folders:
                                       output_filename=cc_csv,
                                       type=type)
 
-            plot_edstats_compare(input_pdbs, refinement_folder, csv_name)
+            plot_edstats_compare(input_pdbs, refinement_folder, os.path.basename(cc_csv))
 
             exit()
 
