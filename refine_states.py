@@ -10,7 +10,7 @@ data_folder =  "/dls/labxchem/data/2017/lb18145-17/processing/analysis/initial_m
 
 base_pdb = os.path.join(ref_path, "XX02KALRNA-x0074-ground-state.pdb")
 rearranged_pdb = os.path.join(ref_path,"dimple_rearrange_correct_residues.pdb")
-multiple_loop_pdb = os.path.join(ref_path,"multiple_loop.pdb")
+multiple_loop_pdb = os.path.join(ref_path,"alt_multiple_loop.pdb")
 
 loop_residues =[['A', '24'], ['A', '25'], ['A', '26'], ['A', '27'],
                 ['A', '28'], ['A', '29'], ['A', '30'], ['A', '31'],
@@ -49,6 +49,7 @@ for dataset_folder in dataset_folders:
     if not os.path.exists(free_mtz_dst):
         copyfile(free_mtz, free_mtz_dst)
 
+
     for pdb, type in input_pdbs.items():
 
         working_dir = os.path.join(dataset_copy_folder, type)
@@ -57,19 +58,19 @@ for dataset_folder in dataset_folders:
             os.mkdir(working_dir)
 
         os.chdir(working_dir)
-        # if type=="multiple":
-        #     write_params(path=working_dir, residues=loop_residues, name=type)
-        #     os.system("giant.quick_refine {} {} {}".format(
-        #         pdb, free_mtz_dst, "multiple.params"))
-        # else:
-        #     os.system("giant.quick_refine {} {}".format(pdb,free_mtz_dst))
+        if type=="multiple":
+            write_params(path=working_dir, residues=loop_residues, name=type)
+            os.system("giant.quick_refine {} {} {}".format(
+                pdb, free_mtz_dst, "multiple.params"))
+        else:
+            os.system("giant.quick_refine {} {}".format(pdb,free_mtz_dst))
 
         refine_pdb = os.path.join(working_dir,"refine.pdb")
         refine_mtz = os.path.join(working_dir,"refine.mtz")
-        #
-        # os.system('giant.score_model input.pdb1={} '
-        #           'input.mtz1={} selection.res_names={} '
-        #           'output.out_dir="edstats"'.format(refine_pdb, refine_mtz,res_names))
+
+        os.system('giant.score_model input.pdb1={} '
+                  'input.mtz1={} selection.res_names={} '
+                  'output.out_dir="edstats"'.format(refine_pdb, refine_mtz,res_names))
 
         loop_hier = residue_select_hierarchy_from_pdb(refine_pdb, loop_residues)
 
@@ -92,12 +93,3 @@ for dataset_folder in dataset_folders:
                                  refinement_folder=refinement_folder,
                                  dataset=dataset,
                                  csv_name=os.path.basename(cc_csv))
-
-
-
-
-
-
-
-
-
