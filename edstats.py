@@ -25,8 +25,32 @@ def convert_txt_to_csv_cc(input_filename, output_filename, type):
 
 def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
 
+    """
+    Plot the RSCC scores
+
+    Parameters
+    ----------
+    input_pdbs
+    refinement_folder
+    dataset
+    csv_name
+
+    Returns
+    -------
+
+    """
+
     fig = plt.figure(figsize=(8,6))
     ax = plt.subplot(111)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.tick_params(bottom=True, top=False, left=True, right=False)
+
+    type_col = {"rearranged": '#677a04',
+                "base": '#0343df'}
+
+    type_text = {"base": "Initial switch I loop position:\n",
+                "rearranged": "Rearranged switch I loop\nposition:\n"}
 
     for pdb, type in input_pdbs.items():
 
@@ -45,11 +69,21 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
             cc_b = b_altloc['CC']
 
             ax.plot(res_num, cc_a,
-                     label="Base Multiple:\n Mean Occ {} \n Mean B {}".format(
-                         mean_occ_a, mean_adp_a))
+                    c='#0343df',
+                    linestyle='--',
+                     label="Superposed initial\n"
+                           "switch I loop position:\n"
+                           "mean occupancy:{0:.2f}\n"
+                           "mean B-factor:{1:.2f}\n".format(
+                         mean_occ_a,mean_adp_a,2))
 
             ax.plot(res_num, cc_b,
-                     label="Rearranged Multiple:\n Mean Occ {} \n Mean B {}".format(
+                    color='#677a04',
+                    linestyle='--',
+                     label="Superposed rearranged\n"
+                           "switch I loop position:\n"
+                           "mean occupancy:{0:.2f}\n"
+                           "mean B-factor:{1:.2f}\n".format(
                          mean_occ_b, mean_adp_b))
             continue
 
@@ -58,18 +92,36 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
         mean_adp = df['ADP'].mean()
         cc = df['CC']
 
-        ax.plot(res_num, cc, label = "{}:\n Mean occ: {}\nMean B {}".format(
-            type, mean_occ, mean_adp))
+        ax.plot(res_num,
+                cc,
+                linestyle='-',
+                color=type_col[type],
+                label = "{0}mean occupancy: {1:.2f}\n"
+                        "mean B-factor {2:.2f}\n".format(type_text[type],
+                                                       mean_occ,
+                                                       mean_adp))
 
     # Shrink current axis by 40%
     box = ax.get_position()
-    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+    ax.set_position([box.x0, box.y0, box.width * 0.75, box.height])
 
     # Put a legend to the right of the current axis
-    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize='x-small')
-    plt.title(dataset)
+    handles, labels = plt.gca().get_legend_handles_labels()
+    order = [3, 2, 0, 1]
 
-    plt.savefig("rscc_{}.png".format(dataset))
+    ax.legend([handles[idx] for idx in order],
+              [labels[idx] for idx in order],
+              loc='center left',
+              frameon=False,
+              bbox_to_anchor=(1, 0.5),
+              fontsize='x-small',
+              handlelength=3)
+
+    plt.title(dataset)
+    plt.xlabel('Loop Residues')
+    plt.ylabel('Real Space Correlation Coefficient')
+
+    plt.savefig("rscc_{}.png".format(dataset), dpi=300)
     plt.close()
 
 

@@ -26,6 +26,25 @@ def set_all_hier_altloc(hier, altloc):
 def residue_select_hierarchy_from_pdb(pdb_path,
                                       residues_select,
                                       invert_selection=False):
+    """
+    Produce hierarchy selection object based
+    on supplied residue list
+
+    Parameters
+    ----------
+    pdb_path: str
+        path to pdb file from whcih atoms are taken
+    residues_select: list
+        list of residues in format [[chain,resid],[chain,resid]]:
+        [['A', '24'], ['A', '25']]
+    invert_selection: bool
+        Flag to invert selection to residues that are not in residues_select
+
+    Returns
+    -------
+    new_atoms_hier
+
+    """
 
     # read in PDB file from which atoms are to be taken from
     pdb_in = hierarchy.input(file_name=pdb_path)
@@ -50,95 +69,103 @@ def residue_select_hierarchy_from_pdb(pdb_path,
 
     return new_atoms_hier
 
-path = "/dls/labxchem/data/2017/lb18145-17/processing/reference/"
-base_pdb = os.path.join(path, "XX02KALRNA-x0074-ground-state.pdb")
-rearranged_pdb = os.path.join(path,"dimple_rearrange_correct_residues.pdb")
 
-loop_residues =[['A', '24'], ['A', '25'], ['A', '26'], ['A', '27'],
-                ['A', '28'], ['A', '29'], ['A', '30'], ['A', '31'],
-                ['A', '32'], ['A', '33'], ['A', '34'], ['A', '35']]
+if __name__ == "__main__":
 
-base_loop_hier = residue_select_hierarchy_from_pdb(base_pdb,
-                                                   loop_residues)
+    # Path to KALRNA reference structures
+    path = "/dls/labxchem/data/2017/lb18145-17/processing/reference/"
 
-base_loop_hier = set_all_hier_occ(hier=base_loop_hier, occ=0.5)
-base_loop_hier = set_all_hier_altloc(hier=base_loop_hier, altloc='A')
+    # Path to structures
+    base_pdb = os.path.join(path, "XX02KALRNA-x0074-ground-state.pdb")
+    rearranged_pdb = os.path.join(path,"dimple_rearrange_correct_residues.pdb")
 
-rearranged_loop_hier = residue_select_hierarchy_from_pdb(rearranged_pdb,
-                                                         loop_residues)
-rearranged_loop_hier = set_all_hier_occ(hier=rearranged_loop_hier, occ=0.5)
-rearranged_loop_hier = set_all_hier_altloc(hier=rearranged_loop_hier, altloc='B')
+    # Residues involved in loop
+    loop_residues =[['A', '24'], ['A', '25'], ['A', '26'], ['A', '27'],
+                    ['A', '28'], ['A', '29'], ['A', '30'], ['A', '31'],
+                    ['A', '32'], ['A', '33'], ['A', '34'], ['A', '35']]
 
-base_hier_no_loop_hier = residue_select_hierarchy_from_pdb(base_pdb,
-                                                           loop_residues,
-                                                           invert_selection=True)
+    # Get hierarchy loop structure  from ground state pdb
+    base_loop_hier = residue_select_hierarchy_from_pdb(base_pdb,
+                                                       loop_residues)
 
-altloc_loop_changed_hier = transfer_residue_groups_from_other(base_loop_hier,
-                                                        base_hier_no_loop_hier,
-                                                        in_place=False,
-                                                        verbose=False)
+    base_loop_hier = set_all_hier_occ(hier=base_loop_hier, occ=0.5)
+    base_loop_hier = set_all_hier_altloc(hier=base_loop_hier, altloc='A')
 
-multiple_loop_hier = transfer_residue_groups_from_other(rearranged_loop_hier,
-                                                        altloc_loop_changed_hier,
-                                                        in_place=False,
-                                                        verbose=False)
+    rearranged_loop_hier = residue_select_hierarchy_from_pdb(rearranged_pdb,
+                                                             loop_residues)
+    rearranged_loop_hier = set_all_hier_occ(hier=rearranged_loop_hier, occ=0.5)
+    rearranged_loop_hier = set_all_hier_altloc(hier=rearranged_loop_hier, altloc='B')
 
-loop_resid = [int(residue[1]) for residue in loop_residues]
-loop_chain = set([residue[0] for residue in loop_residues])
+    base_hier_no_loop_hier = residue_select_hierarchy_from_pdb(base_pdb,
+                                                               loop_residues,
+                                                               invert_selection=True)
 
+    altloc_loop_changed_hier = transfer_residue_groups_from_other(base_loop_hier,
+                                                            base_hier_no_loop_hier,
+                                                            in_place=False,
+                                                            verbose=False)
 
-multiple_loop_hier_copy = multiple_loop_hier.deep_copy()
-for chain in multiple_loop_hier.only_model().chains():
-    if chain.id in loop_chain:
-        copy_chains = [cchain for cchain in multiple_loop_hier_copy.only_model().chains()
-                       if cchain.id in loop_chain]
+    multiple_loop_hier = transfer_residue_groups_from_other(rearranged_loop_hier,
+                                                            altloc_loop_changed_hier,
+                                                            in_place=False,
+                                                            verbose=False)
 
-        copy_chain = copy_chains[0]
-        multiple_loop_hier_copy.only_model().remove_chain(copy_chain)
-        new_chain = iotbx.pdb.hierarchy.chain()
-        new_chain.id = chain.id
-        #
-        # # for copy_residue_group in copy_chain.residue_groups():
-        # #     print(copy_residue_group.resid(),
-        # #           copy_residue_group.resseq,
-        # #           chain.id, copy_chain.id)
-        # #
-        # # print("------------------------------")
-        # # exit()
-        # # for residue_group in chain.residue_groups():
-        # #     print(residue_group.resseq, chain.id, copy_chain.id)
-        # #
-        # # print("------------------------------")
-        #
-
-        # for residue_group in chain.residue_groups():
-        #     print(int(residue_group.resid()),
-        #           int(residue_group.resseq),
-        #           chain.id,
-        #           copy_chain.id)
-        #     print()
-        #     copy_chain.remove_residue_group(int(residue_group.resid()))
-
-        for residue_group in chain.residue_groups():
-            if int(residue_group.resseq) < min(loop_resid):
-                new_chain.append_residue_group(residue_group.detached_copy())
-
-        for residue_group in chain.residue_groups():
-            if int(residue_group.resseq) in loop_resid:
-                new_chain.append_residue_group(residue_group.detached_copy())
-
-        for residue_group in chain.residue_groups():
-            if int(residue_group.resseq) > max(loop_resid):
-                new_chain.append_residue_group(residue_group.detached_copy())
-
-        multiple_loop_hier_copy.only_model().append_chain(new_chain)
+    loop_resid = [int(residue[1]) for residue in loop_residues]
+    loop_chain = set([residue[0] for residue in loop_residues])
 
 
-multiple_loop_hier_copy.reset_i_seq_if_necessary()
+    multiple_loop_hier_copy = multiple_loop_hier.deep_copy()
+    for chain in multiple_loop_hier.only_model().chains():
+        if chain.id in loop_chain:
+            copy_chains = [cchain for cchain in multiple_loop_hier_copy.only_model().chains()
+                           if cchain.id in loop_chain]
 
-base_pdb_in = hierarchy.input(base_pdb)
-f = open(os.path.join(path,"alt_multiple_loop.pdb"), "w+")
-f.write(multiple_loop_hier_copy.as_pdb_string(
-    atoms_reset_serial_first_value = 1,
-    crystal_symmetry=base_pdb_in.input.crystal_symmetry()))
-f.close()
+            copy_chain = copy_chains[0]
+            multiple_loop_hier_copy.only_model().remove_chain(copy_chain)
+            new_chain = iotbx.pdb.hierarchy.chain()
+            new_chain.id = chain.id
+            #
+            # # for copy_residue_group in copy_chain.residue_groups():
+            # #     print(copy_residue_group.resid(),
+            # #           copy_residue_group.resseq,
+            # #           chain.id, copy_chain.id)
+            # #
+            # # print("------------------------------")
+            # # exit()
+            # # for residue_group in chain.residue_groups():
+            # #     print(residue_group.resseq, chain.id, copy_chain.id)
+            # #
+            # # print("------------------------------")
+            #
+
+            # for residue_group in chain.residue_groups():
+            #     print(int(residue_group.resid()),
+            #           int(residue_group.resseq),
+            #           chain.id,
+            #           copy_chain.id)
+            #     print()
+            #     copy_chain.remove_residue_group(int(residue_group.resid()))
+
+            for residue_group in chain.residue_groups():
+                if int(residue_group.resseq) < min(loop_resid):
+                    new_chain.append_residue_group(residue_group.detached_copy())
+
+            for residue_group in chain.residue_groups():
+                if int(residue_group.resseq) in loop_resid:
+                    new_chain.append_residue_group(residue_group.detached_copy())
+
+            for residue_group in chain.residue_groups():
+                if int(residue_group.resseq) > max(loop_resid):
+                    new_chain.append_residue_group(residue_group.detached_copy())
+
+            multiple_loop_hier_copy.only_model().append_chain(new_chain)
+
+
+    multiple_loop_hier_copy.reset_i_seq_if_necessary()
+
+    base_pdb_in = hierarchy.input(base_pdb)
+    f = open(os.path.join(path,"alt_multiple_loop.pdb"), "w+")
+    f.write(multiple_loop_hier_copy.as_pdb_string(
+        atoms_reset_serial_first_value = 1,
+        crystal_symmetry=base_pdb_in.input.crystal_symmetry()))
+    f.close()
