@@ -78,7 +78,7 @@ if __name__ == "__main__":
     plt.scatter(x=cc_diff_unsure['Dataset'],
                 y=cc_diff_unsure['cc_diff'],
                 c='y',
-                label="Unsure")
+                label="Further information required")
     plt.scatter(x=cc_diff_rearranged['Dataset'],
                 y=cc_diff_rearranged['cc_diff'],
                 c='r',

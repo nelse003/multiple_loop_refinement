@@ -46,8 +46,8 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
     ax.spines["right"].set_visible(False)
     ax.tick_params(bottom=True, top=False, left=True, right=False)
 
-    type_col = {"rearranged": '#677a04',
-                "base": '#0343df'}
+    type_col = {"rearranged": '#76cd26',
+                "base": '#75bbfd'}
 
     type_text = {"base": "Initial switch I loop position:\n",
                 "rearranged": "Rearranged switch I loop\nposition:\n"}
@@ -69,8 +69,9 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
             cc_b = b_altloc['CC']
 
             ax.plot(res_num, cc_a,
-                    c='#0343df',
+                    c='#040273',
                     linestyle='--',
+                    linewidth=3,
                      label="Superposed initial\n"
                            "switch I loop position:\n"
                            "mean occupancy:{0:.2f}\n"
@@ -78,8 +79,9 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
                          mean_occ_a,mean_adp_a,2))
 
             ax.plot(res_num, cc_b,
-                    color='#677a04',
+                    color='#0b4008',
                     linestyle='--',
+                    linewidth=3,
                      label="Superposed rearranged\n"
                            "switch I loop position:\n"
                            "mean occupancy:{0:.2f}\n"
@@ -95,6 +97,7 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
         ax.plot(res_num,
                 cc,
                 linestyle='-',
+                linewidth=3,
                 color=type_col[type],
                 label = "{0}mean occupancy: {1:.2f}\n"
                         "mean B-factor {2:.2f}\n".format(type_text[type],
@@ -118,7 +121,7 @@ def plot_edstats_compare(input_pdbs, refinement_folder, dataset, csv_name):
               handlelength=3)
 
     plt.title(dataset)
-    plt.xlabel('Loop Residues')
+    plt.xlabel('Rac1 Switch I Loop Residues')
     plt.ylabel('Real Space Correlation Coefficient')
 
     plt.savefig("rscc_{}.png".format(dataset), dpi=300)
