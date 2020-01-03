@@ -1,7 +1,31 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-#from sklearn.metrics import precision_recall_curve
+import numpy as np
+
+
+def connectpoints(x, y, x_1, y_1, p1, linestyle="k-"):
+
+    """
+    Draw lines between two lists of points
+
+    Parameters
+    ----------
+    x
+    y
+    x_1
+    y_1
+    p1
+    linestyle
+
+    Returns
+    -------
+
+    """
+
+    x1, x2 = x[p1], x_1[p1]
+    y1, y2 = y[p1], y_1[p1]
+    plt.plot([x1, x2], [y1, y2], linestyle, lw=0.5)
 
 if __name__ == "__main__":
 
@@ -72,16 +96,16 @@ if __name__ == "__main__":
 
     plt.scatter(x=cc_diff_ini['Dataset'],
                 y=cc_diff_ini['cc_diff'],
-                c='g',
+                c=(1.0,0.87,0.37),
                 label="Initial switch 1 loop position")
 
     plt.scatter(x=cc_diff_unsure['Dataset'],
                 y=cc_diff_unsure['cc_diff'],
-                c='y',
+                c=(0.6,0.6,0.6),
                 label="Further information required")
     plt.scatter(x=cc_diff_rearranged['Dataset'],
                 y=cc_diff_rearranged['cc_diff'],
-                c='r',
+                c=(1.0,0.5,0.0),
                 label="Rearranged switch 1 loop position")
 
     plt.xticks(rotation=90)
@@ -101,13 +125,77 @@ if __name__ == "__main__":
     multiple_mean_unsure_df_A = multiple_mean_unsure_df[multiple_mean_unsure_df['Alt']=='A']
     multiple_mean_unsure_df_B = multiple_mean_unsure_df[multiple_mean_unsure_df['Alt']=='B']
 
-    print(multiple_mean_unsure_df_A)
-    print(multiple_mean_unsure_df_B)
+    #print(multiple_mean_unsure_df_A)
+    #print(multiple_mean_unsure_df_B)
 
     #multiple_mean_unsure_df_A.plot(x='occ', y='ADP', c='r', kind='scatter')
     #multiple_mean_unsure_df_B.plot(x='occ', y='ADP', c='b', kind='scatter')
 
-    print(multiple_mean_unsure_df_A['ADP'].values-multiple_mean_unsure_df_B['ADP'].values)
+    #print(multiple_mean_unsure_df_A['ADP'].values-multiple_mean_unsure_df_B['ADP'].values)
 
-    plt.hist(multiple_mean_unsure_df_A['ADP'].values-multiple_mean_unsure_df_B['ADP'].values)
-    plt.show()
+    #plt.hist(multiple_mean_unsure_df_A['ADP'].values-multiple_mean_unsure_df_B['ADP'].values)
+    # plt.scatter(multiple_mean_unsure_df_A['occ'].values-multiple_mean_unsure_df_B['occ'].values,
+    #             multiple_mean_unsure_df_A['CC'].values-multiple_mean_unsure_df_B['CC'].values,)
+
+    #print(multiple_mean_df.columns.values)
+    mean_df = cc_all_df.groupby(["Dataset", "type","Alt"]).mean()
+    mean_df = mean_df.reset_index()
+
+    # print(cc_all_df.columns.values)
+    # print(mean_df.columns.values)
+    # print(mean_df)
+
+    mean_df_A = mean_df[mean_df['Alt']=='A']
+    mean_df_B = mean_df[mean_df['Alt']=='B']
+
+    # plt.scatter(x=mean_df_A['ADP'],
+    #             y=mean_df_A['CC'])
+    #
+    # plt.scatter(x=mean_df_B['ADP'],
+    #             y=mean_df_B['CC'])
+
+    # A base, B rearrnaged
+
+    ax = plt.subplot(111)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    for i in np.arange(len(multiple_mean_unsure_df_A['ADP'])):
+        connectpoints(x=np.array(multiple_mean_unsure_df_A['ADP']),
+                      y=np.array(multiple_mean_unsure_df_A['CC']),
+                      x_1=np.array(multiple_mean_unsure_df_B['ADP']),
+                      y_1=np.array(multiple_mean_unsure_df_B['CC']),
+                      p1=i,
+                      linestyle='k--')
+
+    plt.scatter(x=multiple_mean_unsure_df_A['ADP'],
+                y=multiple_mean_unsure_df_A['CC'],
+                color=(0.6,0.6,0.6),
+                marker='o',
+                facecolors='none',
+                label="Rearranged switch 1 loop position")
+
+    plt.scatter(x=multiple_mean_unsure_df_B['ADP'],
+                y=multiple_mean_unsure_df_B['CC'],
+                color=(0.6,0.6,0.6),
+                marker='s',
+                facecolors='none',
+                label="Initial switch 1 loop position")
+
+    ax.axhline(y=0.8,ls='--', color='orange')
+    ax.axhline(y=0.7, ls ='--', color='red')
+    ax.axhline(y=0.9, ls='--', color ='green')
+
+    plt.ylabel("RSCC")
+    plt.xlabel("B factor")
+    leg = plt.legend(fontsize=6,
+                     loc='lower right',
+                     frameon=False)
+
+    leg.set_title(title="Superposed model for datasets\n"
+                     "classified as\n"
+                     "\"further information required\"",
+                  prop={'size': 8})
+
+    plt.savefig("RSCC_B_occ_unsure", bbox_inches = 'tight',dpi=300)
+
